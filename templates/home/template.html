@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Patient Monitoring System</title>
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <style>
+        /* Background color */
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* Fixed navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 55px;
+            left: 0;
+            bottom: 0;
+            width: 200px;
+            background-color: #fff;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Sidebar links */
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Sidebar link icons */
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light " style="background:#337AB0">
+    <a class="navbar-brand" href="#">
+      <i class="fas fa-clinic-medical"></i> <span style="font-family: 'Lobster', cursive;">Patient Monitoring</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Patients</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Docteurs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Secrétaires</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Administrateurs</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a href="/logout" class="nav-item nav-link">
+            <i class="fas fa-user"></i> Déconnexion
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>  
+    <div class="sidebar" style="background:#337AB0";>
+        <div class="text-center mb-3">
+            <img src="https://via.placeholder.com/150" class="rounded-circle">
+            <p class="mt-3">John Doe</p>
+        </div>
+        <a href="#">
+            <i class="fas fa-home"></i>
+            Accueil
+        </a>
+        <a href="#">
+            <i class="fas fa-user-injured"></i>
+            Patients
+        </a>
+        <a href="#">
+            <i class="fas fa-calendar-alt"></i>
+            Agenda
+        </a>
+        <a href="#">
+            <i class="fas fa-clipboard-list"></i>
+            Dossiers
+        </a>
+        <a href="#">
+            <i class="fas fa-prescription-bottle-alt"></i>
+            Ordonnance
+        </a>
+    </div>
+    <div class="main-content">
+      <div class="card mb-3 my-5">
+        <div class="card-header" style:color="red"><span class="badge badge-danger">Rendez-vous du jour</span></div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Heure</th>
+                <th>Patient</th>
+                <th>Motif</th>
+                <th>Priorité</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>9h00</td>
+                <td>John Doe</td>
+                <td>Consultation</td>
+                <td>
+                  <span class="badge badge-danger">Urgent</span>
+                </td>
+              </tr>
+              <tr>
+                <td>10h00</td>
+                <td>Jane Smith</td>
+                <td>Examen</td>
+                <td>
+                  <span class="badge badge-warning">Moyen</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="card mb-3">
+        <div class="card-header"><span class="badge badge-success">Rendez-vous a venir</span></div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Patient</th>
+                <th>Motif</th>
+                <th>Priorité</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2022-02-01</td>
+                <td>8h00</td>
+                <td>John Doe</td>
+                <td>Consultation</td>
+                <td>
+                  <span class="badge badge-success">Faible</span>
+                </td>
+              </tr>
+              <tr>
+                <td>2022-02-15</td>
+                <td>9h00</td>
+                <td>Jane Smith</td>
+                <td>Examen</td>
+                <td>
+                  <span class="badge badge-warning">Moyen</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h5>Liste des Patients</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="color: #337AB7;">Nom</th>
+                                    <th style="color: #337AB7;">Age</th>
+                                    <th style="color: #337AB7;">Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Doe</td>
+                                    <td>35</td>
+                                    <td>+1234567890</td>
+                                </tr>
+                                <tr>
+                                    <td>Jane Smith</td>
+                                    <td>29</td>
+                                    <td>+0987654321</td>
+                                </tr>
+                                <tr>
+                                    <td>Bob Johnson</td>
+                                    <td>42</td>
+                                    <td>+1357902468</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h5>Agenda</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="color: #337AB7;">Patient</th>
+                                    <th style="color: #337AB7;">Doctor</th>
+                                    <th style="color: #337AB7;">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Doe</td>
+                                    <td>Dr. Smith</td>
+                                    <td>01/01/2022</td>
+                                </tr>
+                                <tr>
+                                    <td>Jane Smith</td>
+                                    <td>Dr. Johnson</td>
+                                    <td>02/01/2022</td>
+                                </tr>
+                                <tr>
+                                    <td>Bob Johnson</td>
+                                    <td>Dr. Williams</td>
+                                    <td>03/01/2022</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-light"></div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+</html>
+
+
+

@@ -22,6 +22,7 @@ from monitoring import views
 
 #-------------FOR ADMIN RELATED URLS
 urlpatterns = [
+    path('abdou',views.abdou,name='abdou'),
     path('admin/', admin.site.urls),
     path('',views.home_view,name=''),
 
@@ -47,7 +48,7 @@ urlpatterns = [
 
 
     path('afterlogin', views.afterlogin_view,name='afterlogin'),
-    path('logout', LogoutView.as_view(template_name='hospital/index.html'),name='logout'),
+    path('logout', LogoutView.as_view(template_name='home/index.html'),name='logout'),
 
 
     path('admin-dashboard', views.admin_dashboard_view,name='admin-dashboard'),

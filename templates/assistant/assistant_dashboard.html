@@ -7,27 +7,31 @@
   <div class="row">
     <div class="panel panel-primary" style="margin-left:2%;">
       <div class="panel-heading" style="text-align:center;">
-        <h6 class="panel-title">Recent Appointments For You</h6>
+        <h6 class="panel-title">LISTE DES PATIENTS</h6>
       </div>
       <table class="table table-hover table-striped" id="dev-table">
         <thead class="thead-dark">
           <tr>
-            <th>Patient Name</th>
-            <th>Picture</th>
-            <th>Description</th>
+            <th>Photo patient</th>
+            <th>Nom patient</th>
+            <th>Genre</th>
+            <th>Date naissance</th>
             <th>Contact</th>
-            <th>Address</th>
-            <th>Date</th>
+            <th>trauma</th>
+            <th>Admission</th>
+            <th>Groupe sanguin</th>
           </tr>
         </thead>
-        {% for a,p in appointments %}
+        {% for p in patients %}
         <tr>
-          <td>{{a.patientName}}</td>
-          <td> <img src="{% static p.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
-          <td>{{a.description}}</td>
-          <td>{{p.mobile}}</td>
-          <td>{{p.address}}</td>
-          <td>{{a.appointmentDate}}</td>
+          <td> <img src= load {% static 'p.profile' %}  alt="Profile Pic" height="40px" width="40px" /></td>
+          <td>{{p.prenom}} {{p.Nom}}</td>
+          <td>{{p.sexe}}</td>
+          <td>{{p.naissance}}</td>
+          <td>{{p.telephone}}</td>
+          <td>{{p.symptoms}}</td>
+          <td>{{p.admission}}</td>
+          <td>{{p.groupe_sanguin}}</td>
         </tr>
         {% endfor %}
       </table>

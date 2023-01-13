@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 departments=[('Cardiologie', 'Cardiologue'), ('Dermatologie', 'Dermatologue'), ('Urgence', 'Urgentiste'), ('Allergie/Immunologie', 'Allergiste/Immunologiste'), ('Chirurgie', 'Anesthesiste'), ('Biologie', 'Biologiste'), ('Radiologie', 'Radiologue'), ('Ophtalmologie', 'Ophtalmologue'), ('Odontologie', 'Dentiste'), ('Pharmacie', 'Pharmacien'), ('Consultation', 'Généraliste'), ('Laboratoire', 'Chimiste'), ('Reanimation', 'Chirurgien')]
+services=[('Cardiologie', 'Cardiologie'), ('Dermatologie', 'Dermatologie'), ('Urgence', 'Urgence'), ('Allergie/Immunologie', 'Allergie/Immunologie'), ('Chirurgie', 'Chirurgie'), ('Radiologie', 'Radiologie'), ('Radiologie', 'Radiologie'), ('Ophtalmologie', 'Ophtalmologie'), ('Odontologie', 'Odontologie'), ('Pharmacie', 'Pharmacie'), ('Consultation', 'Consultation'), ('Laboratoire', 'Laboratoire'), ('Reanimation', 'Reanimation')]
 
 
 class Patient(models.Model):

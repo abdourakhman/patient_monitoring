@@ -22,9 +22,9 @@ from monitoring import views
 
 #-------------FOR ADMIN RELATED URLS
 urlpatterns = [
-    path('abdou',views.abdou,name='abdou'),
     path('admin/', admin.site.urls),
     path('',views.home_view,name=''),
+    path('docteur',views.interface_docteur,name='interface_docteur'),
 
 
     path('aboutus', views.aboutus_view),

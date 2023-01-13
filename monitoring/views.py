@@ -38,8 +38,8 @@ def patientclick_view(request):
         return HttpResponseRedirect('afterlogin')
     return render(request,'patient/patientclick.html')
 
-def abdou(request):
-    return render(request,'home/template.html')
+def interface_docteur(request):
+    return render(request,'docteur/dashbord.html')
 
 
 

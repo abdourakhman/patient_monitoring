@@ -14,12 +14,14 @@ class Patient(models.Model):
     naissance = models.DateField(null=True)
     sexe = models.CharField(max_length=1, choices=[('M', 'Masculin'), ('F', 'Féminin')], null=True)
     telephone = models.CharField(max_length=20, null=False)
-    symptoms = models.CharField(max_length=100,null=True)
+    symptoms = models.CharField(max_length=200,null=True)
     groupe_sanguin = models.CharField(max_length=10, null=True)
     secretaire = models.ForeignKey("Secretaire", on_delete=models.DO_NOTHING, null=True, related_name='patients')
     admission=models.DateField(auto_now_add=True)
     services = models.ManyToManyField("Service", related_name='patients')
     profile = models.ImageField(upload_to='profile_pic/PatientProfilePic/', null=True, blank=True)
+    status=models.BooleanField(default=False)
+
 
     
     def __str__(self):
@@ -37,6 +39,8 @@ class Docteur(models.Model):
     specialite = models.CharField(max_length=50,choices=departments,default='Généraliste')
     profile = models.ImageField(upload_to='profile_pic/DocteurProfilePic/', null=True, blank=True)
     service = models.ForeignKey("Service", on_delete=models.SET_DEFAULT,null=False,default=0)
+    status=models.BooleanField(default=False)
+
 
     def __str__(self):
         return f" {self.user.email}/{self.prenom} {self.nom}"
@@ -50,6 +54,7 @@ class Secretaire(models.Model):
     telephone = models.CharField(max_length=20, null=False)
     adresse = models.CharField(max_length=40)
     profile = models.ImageField(upload_to='profile_pic/SecretaireProfilePic/', null=True, blank=True)
+    status=models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.prenom} {self.nom}"

@@ -102,6 +102,8 @@ class DossierMedical(models.Model):
 
 class RendezVous(models.Model):
     date = models.DateField(null=False)
+    motif = models.CharField(max_length=255, null=True, default="Aucun motif particulier")
+    priorite = models.CharField(max_length=7, null=False,choices=[('Urgent','Urgent'),('Moyen','Moyen'),('Faible','Faible')],default='Moyen')
     docteur = models.ForeignKey("Docteur", on_delete=models.CASCADE,related_name='rendez_vous_docteur')
     patients = models.ForeignKey("Patient", on_delete=models.DO_NOTHING,related_name='rendez_vous_patient')
 

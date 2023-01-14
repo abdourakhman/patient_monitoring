@@ -1,0 +1,176 @@
+{% extends 'layout/template.html' %}
+{% load static %}
+{% block content %}
+<div class="sidebar" style="background:#337AB0";>
+  <div class="text-center mb-3">
+      <img src= {% static docteur.profile.url %} alt='profile docteur' class="rounded-circle" height="160px" width="160px" >
+      <p class="mt-3 text-light bg-dark">Dr {{ docteur.prenom }} {{ docteur.nom }}</p>
+  </div>
+  <a href="#" class="text-white">
+      <i class="fas fa-home"></i>
+      Accueil
+  </a>
+  <a href="#" class="text-white">
+      <i class="fas fa-user-injured"></i>
+      Patients
+  </a>
+  <a href="#" class="text-white">
+      <i class="fas fa-calendar-alt"></i>
+      Agenda
+  </a>
+  <a href="#" class="text-white">
+      <i class="fas fa-clipboard-list"></i>
+      Dossiers
+  </a>
+  <a href="#" class="text-white">
+      <i class="fas fa-prescription-bottle-alt"></i>
+      Ordonnance
+  </a>
+</div>
+     <div class="main-content">
+      <div class="card mb-3 my-5 overflow-auto">
+        <div class="card-header" style:color="red"><span class="badge badge-danger">Rendez-vous du jour ({{ rdv_today }}) </span></div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Heure</th>
+                <th>Patient</th>
+                <th>Motif</th>
+                <th>Symptome</th>
+                <th>Priorité</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for rdv in today_appointements %}
+              <tr>
+                  <td>{{ rdv.date|time:"H:i" }}</td>
+                  <td>{{ rdv.patients.prenom }} {{ rdv.patients.nom }}</td>
+                  <td>{{ rdv.motif }}</td>
+                  <td>{{ rdv.patients.symptoms }}</td>
+                  <td>
+                      {% if rdv.priorite == "Urgent" %}
+                          <span class="badge badge-danger">Urgent</span>
+                      {% elif rdv.priorite == "Moyen" %}
+                          <span class="badge badge-warning">Moyen</span>
+                      {% else %}
+                          <span class="badge badge-success">Faible</span>
+                      {% endif %}
+                  </td>
+              </tr>
+          {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="card mb-3 overflow-auto">
+        <div class="card-header"><span class="badge badge-success">Rendez-vous a venir ({{ next_rdv }})</span></div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Patient</th>
+                <th>Motif</th>
+                <th>Symptome</th>
+                <th>Priorité</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for rdv in future_appointments %}
+              <tr>
+                  <td>{{ rdv.date|date:"d/m/Y"  }}</td>
+                  <td>{{ rdv.date|time:"H:i" }}</td>
+                  <td>{{ rdv.patients.prenom }} {{ rdv.patients.nom }}</td>
+                  <td>{{ rdv.motif }}</td>
+                  <td>{{ rdv.patients.symptoms }}</td>
+                  <td>
+                      {% if rdv.priorite == "Urgent" %}
+                          <span class="badge badge-danger">Urgent</span>
+                      {% elif rdv.priorite == "Moyen" %}
+                          <span class="badge badge-warning">Moyen</span>
+                      {% else %}
+                          <span class="badge badge-success">Faible</span>
+                      {% endif %}
+                  </td>
+              </tr>
+          {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h5>Liste des Patients</h5>
+                    </div>
+                    <div class="card-body overflow-auto">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="color: #337AB7;">Nom</th>
+                                    <th style="color: #337AB7;">Age</th>
+                                    <th style="color: #337AB7;">Genre</th>
+                                    <th style="color: #337AB7;">Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              {% for patient in patients %}
+                              <tr>
+                                  <td>{{ patient.prenom }} {{ patient.nom }}</td>
+                                  {% with age=patient.naissance|timesince %}                               
+                                    <td>{{ age.split|first }}</td>
+                                  {% endwith %}
+                                  {% if patient.sexe == "Masculin" %}
+                                  <td><span class="badge text-primary">H</span></td>
+                                  {% else %}
+                                      <td><span class="badge text-danger">F</span></td>
+                                  {% endif %}
+                                  <td>{{ patient.telephone }}</td>
+                              </tr>
+                          {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h5>Agenda</h5>
+                    </div>
+                    <div class="card-body overflow-auto">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="color: #337AB7;">Patient</th>
+                                    <th style="color: #337AB7;">Date</th>
+                                    <th style="color: #337AB7;">Heure</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              {% for rdv in future_appointments %}
+                              <tr>
+                                <td>{{ rdv.patients }}</td>
+                                  <td>{{ rdv.date|date:"d-m-Y"  }}</td>
+                                  <td>{{ rdv.date|time:"H:i" }}</td>
+                              </tr>
+                          {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-light"></div> 
+{% endblock  %} 
+
+
+

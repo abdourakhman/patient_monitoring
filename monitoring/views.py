@@ -637,26 +637,47 @@ def reject_appointment_view(request,pk):
 # @login_required(login_url='doctorlogin')
 # @user_passes_test(is_doctor)
 def doctor_dashboard_view(request):
-    #for three cards
-    patientcount=models.Patient.objects.all().filter(status=True,assignedDoctorId=request.user.id).count()
-    appointmentcount=models.Appointment.objects.all().filter(status=True,doctorId=request.user.id).count()
-    patientdischarged=models.PatientDischargeDetails.objects.all().distinct().filter(assignedDoctorName=request.user.first_name).count()
 
-    #for  table in doctor dashboard
-    appointments=models.Appointment.objects.all().filter(status=True,doctorId=request.user.id).order_by('-id')
-    patientid=[]
-    for a in appointments:
-        patientid.append(a.patientId)
-    patients=models.Patient.objects.all().filter(status=True,user_id__in=patientid).order_by('-id')
-    appointments=zip(appointments,patients)
-    mydict={
-    'patientcount':patientcount,
-    'appointmentcount':appointmentcount,
-    'patientdischarged':patientdischarged,
-    'appointments':appointments,
-    'doctor':models.Doctor.objects.get(user_id=request.user.id), #for profile picture of doctor in sidebar
+    docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
+
+    today_appointments = models.RendezVous.objects.filter(docteur=docteur, date=date.today())
+
+    all_appointments = models.RendezVous.objects.filter(docteur=docteur).order_by('date')
+
+    today = datetime.now().date()
+    rdv_today = models.RendezVous.objects.filter(docteur=docteur, date=today).count()
+
+    next_rdv = models.RendezVous.objects.filter(docteur=docteur, date__gt=today).count()
+
+    future_appointments = models.RendezVous.objects.filter(docteur=docteur, date__gt=today).all()
+    # Récupération des patients liés au service du docteur connecté
+    patients_service = models.Patient.objects.filter(services=docteur.service)
+
+    # Récupération des patients liés aux rendez-vous du docteur connecté
+    patients_appointments = models.Patient.objects.filter(rendez_vous_patient__docteur=docteur)
+
+    # Récupération des patients liés au service du docteur connecté et aux rendez-vous du docteur connecté
+    patients = patients_service | patients_appointments
+
+    # Suppression des duplicatas
+    patients = patients.distinct()
+    patient_count = patients.distinct().count()
+    # patients = list(patients)
+    # all_appointments = list(all_appointments)
+    # today_appointments = list(today_appointments)
+    for f in future_appointments:
+        print(f.patients)
+    data = {
+    'today_appointments': today_appointments,
+    'patients': patients,
+    'docteur': docteur,
+    'patient_count': patient_count,
+    'future_appointments':future_appointments,
+    'all_appointments': all_appointments,
+    'rdv_today':rdv_today,
+    'next_rdv':next_rdv
     }
-    return render(request,'docteur/dashboard.html',context=mydict)
+    return render(request,'docteur/dashboard.html',context=data)
 
 
 

@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-import date
 
 
 departments=[('Cardiologie', 'Cardiologue'), ('Dermatologie', 'Dermatologue'), ('Urgence', 'Urgentiste'), ('Allergie/Immunologie', 'Allergiste/Immunologiste'), ('Chirurgie', 'Anesthesiste'), ('Biologie', 'Biologiste'), ('Radiologie', 'Radiologue'), ('Ophtalmologie', 'Ophtalmologue'), ('Odontologie', 'Dentiste'), ('Pharmacie', 'Pharmacien'), ('Consultation', 'Généraliste'), ('Laboratoire', 'Chimiste'), ('Reanimation', 'Chirurgien')]
@@ -17,7 +16,7 @@ class Patient(models.Model):
     symptoms = models.CharField(max_length=200,null=True)
     groupe_sanguin = models.CharField(max_length=10, null=True)
     secretaire = models.ForeignKey("Secretaire", on_delete=models.DO_NOTHING, null=True, related_name='patients')
-    admission=models.DateTimeField(auto_now_add=True)
+    admission=models.DateTimeField(null=True)
     services = models.ManyToManyField("Service", related_name='patients')
     profile = models.ImageField(upload_to='profile_pic/PatientProfilePic/', null=True, blank=True)
     status=models.BooleanField(default=False)

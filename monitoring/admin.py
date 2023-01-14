@@ -41,6 +41,8 @@ class AdminPatient(admin.ModelAdmin):
 class AdminDocteur(admin.ModelAdmin):
     list_display=('prenom','nom','sexe','service')
 
+class AdminRV(admin.ModelAdmin):
+    list_display=('date','motif','priorite','patients','docteur')
 #admin.site.unregister(User)
 admin.site.register(Lit,AdminLit)
 admin.site.register(Salle,AdminSalle)
@@ -50,5 +52,5 @@ admin.site.register(Secretaire)
 admin.site.register(Docteur,AdminDocteur)
 admin.site.register(DossierMedical)
 admin.site.register(Ordonnance)
-admin.site.register(RendezVous)
+admin.site.register(RendezVous,AdminRV)
 #admin.site.register(User, UtlisateurAdmin)

@@ -6,6 +6,8 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required,user_passes_test
 from datetime import datetime,timedelta,date
 from django.conf import settings
+from django.utils import timezone
+
 
 from . import forms,models
 
@@ -640,19 +642,19 @@ def doctor_dashboard_view(request):
 
     docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
 
-    today_appointments = models.RendezVous.objects.filter(docteur=docteur, date=date.today())
-
+    today_appointments = models.RendezVous.objects.filter(docteur=docteur, date__date=timezone.now().date()).all()
     all_appointments = models.RendezVous.objects.filter(docteur=docteur).order_by('date')
 
     today = datetime.now().date()
-    rdv_today = models.RendezVous.objects.filter(docteur=docteur, date=today).count()
+    rdv_today = today_appointments.count()
 
-    next_rdv = models.RendezVous.objects.filter(docteur=docteur, date__gt=today).count()
-
-    future_appointments = models.RendezVous.objects.filter(docteur=docteur, date__gt=today).all()
-    # Récupération des patients liés au service du docteur connecté
+    today = date.today()
+    tomorrow = today + timedelta(days=1)
+    future_appointments = models.RendezVous.objects.filter(docteur=docteur, date__gte=tomorrow).all()
+   
     patients_service = models.Patient.objects.filter(services=docteur.service)
 
+    next_rdv = future_appointments.count()
     # Récupération des patients liés aux rendez-vous du docteur connecté
     patients_appointments = models.Patient.objects.filter(rendez_vous_patient__docteur=docteur)
 
@@ -662,11 +664,7 @@ def doctor_dashboard_view(request):
     # Suppression des duplicatas
     patients = patients.distinct()
     patient_count = patients.distinct().count()
-    # patients = list(patients)
-    # all_appointments = list(all_appointments)
-    # today_appointments = list(today_appointments)
-    for f in future_appointments:
-        print(f.patients)
+   
     data = {
     'today_appointments': today_appointments,
     'patients': patients,

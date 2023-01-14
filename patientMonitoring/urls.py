@@ -41,6 +41,10 @@ urlpatterns = [
     path('patientsignup', views.patient_signup_view),
     path('assistantsignup', views.assistant_signup_view,name='assistantsignup'),
     
+
+    # Loginview permet de verifier l'authentification et la validite di formulaire et en cas de success
+    # redirige l'utilisateur sur la page spécifié dans la variable LOGIN_REDIRECT_URL='/afterlogin' dans seettings
+
     path('adminlogin', LoginView.as_view(template_name='hospital/adminlogin.html')),
     path('doctorlogin', LoginView.as_view(template_name='docteur/doctorlogin.html')),
     path('patientlogin', LoginView.as_view(template_name='patient/patientlogin.html')),
@@ -51,7 +55,6 @@ urlpatterns = [
     path('logout', LogoutView.as_view(template_name='home/index.html'),name='logout'),
 
 
-    path('admin-dashboard', views.admin_dashboard_view,name='admin-dashboard'),
 
     path('admin-doctor', views.admin_doctor_view,name='admin-doctor'),
     path('admin-view-doctor', views.admin_view_doctor_view,name='admin-view-doctor'),

@@ -23,6 +23,8 @@ def adminclick_view(request):
 
 #for showing signup/login button for doctor(by sumit)
 def doctorclick_view(request):
+    if(request.user.is_authenticated):
+        return HttpResponseRedirect('afterlogin')
     return render(request,'docteur/doctorclick.html')
 
 #for showing signup/login button for assistant(by sumit)
@@ -127,7 +129,7 @@ def patient_signup_view(request):
 def is_admin(user):
     return user.groups.filter(name='ADMIN').exists()
 def is_doctor(user):
-    return user.groups.filter(name='DOCTOR').exists()
+    return user.groups.filter(name='DOCTEUR').exists()
 def is_assistant(user):
     return user.groups.filter(name='SECRETAIRE').exists()
 def is_patient(user):
@@ -167,40 +169,6 @@ def afterlogin_view(request):
 #---------------------------------------------------------------------------------
 #------------------------ ADMIN RELATED VIEWS START ------------------------------
 #---------------------------------------------------------------------------------
-@login_required(login_url='adminlogin')
-@user_passes_test(is_admin)
-def admin_dashboard_view(request):
-    #for both table in admin dashboard
-    doctors=models.Doctor.objects.all().order_by('-id')
-    patients=models.Patient.objects.all().order_by('-id')
-    assistants=models.Assistant.objects.all().order_by('-id')
-    #for three cards
-    doctorcount=models.Doctor.objects.all().filter(status=True).count()
-    pendingdoctorcount=models.Doctor.objects.all().filter(status=False).count()
-
-    assistantcount=models.Assistant.objects.all().filter(status=True).count()
-    pendingassistantcount=models.Doctor.objects.all().filter(status=False).count()
-
-    
-    patientcount=models.Patient.objects.all().filter(status=True).count()
-    pendingpatientcount=models.Patient.objects.all().filter(status=False).count()
-
-    appointmentcount=models.Appointment.objects.all().filter(status=True).count()
-    pendingappointmentcount=models.Appointment.objects.all().filter(status=False).count()
-    mydict={
-    'doctors':doctors,
-    'patients':patients,
-    'assistant':assistants,
-    'doctorcount':doctorcount,
-    'pendingdoctorcount':pendingdoctorcount,
-    'patientcount':patientcount,
-    'assistantcount':assistantcount,
-    'pendingassistantcount':pendingassistantcount,
-    'pendingpatientcount':pendingpatientcount,
-    'appointmentcount':appointmentcount,
-    'pendingappointmentcount':pendingappointmentcount,
-    }
-    return render(request,'hospital/admin_dashboard.html',context=mydict)
 
 
 # this view for sidebar click on admin page
@@ -688,7 +656,7 @@ def doctor_dashboard_view(request):
     'appointments':appointments,
     'doctor':models.Doctor.objects.get(user_id=request.user.id), #for profile picture of doctor in sidebar
     }
-    return render(request,'hospital/doctor_dashboard.html',context=mydict)
+    return render(request,'docteur/dashboard.html',context=mydict)
 
 
 

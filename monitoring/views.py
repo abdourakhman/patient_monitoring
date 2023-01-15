@@ -679,13 +679,21 @@ def doctor_dashboard_view(request):
 
 
 
-# @login_required(login_url='doctorlogin')
-# @user_passes_test(is_doctor)
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)
 def doctor_patient_view(request):
-    mydict={
-    'doctor':models.Doctor.objects.get(user_id=request.user.id), #for profile picture of doctor in sidebar
-    }
-    return render(request,'hospital/doctor_patient.html',context=mydict)
+
+    docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
+    patients_service = models.Patient.objects.filter(services=docteur.service)
+    # Récupération des patients liés aux rendez-vous du docteur connecté
+    patients_appointments = models.Patient.objects.filter(rendez_vous_patient__docteur=docteur)
+    # Récupération des patients liés au service du docteur connecté et aux rendez-vous du docteur connecté
+    patients = patients_service | patients_appointments
+    # Suppression des duplicatas
+    patients = patients.distinct()
+    patient_count = patients.distinct().count()
+   
+    return render(request,'docteur/patients.html',context={'patients':patients ,'nb_patient':patient_count})
 
 
 

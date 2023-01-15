@@ -1,7 +1,8 @@
 {% extends 'layout/template.html' %}
 {% load static %}
 {% block content %}
-<div class="sidebar" style="background:#337AB0";>
+{% include 'layout/sidebar.html' %}
+{% comment %} <div class="sidebar" style="background:#337AB0";>
   <div class="text-center mb-3">
       <img src= {% static docteur.profile.url %} alt='profile docteur' class="rounded-circle" height="160px" width="160px" >
       <p class="mt-3 text-light bg-dark">Dr {{ docteur.prenom }} {{ docteur.nom }}</p>
@@ -26,7 +27,7 @@
       <i class="fas fa-prescription-bottle-alt"></i>
       Ordonnance
   </a>
-</div>
+</div> {% endcomment %}
      <div class="main-content">
       <div class="card mb-3 my-5 overflow-auto">
         <div class="card-header" style:color="red"><span class="badge badge-danger">RENDEZ-VOUS DU JOUR ({{ rdv_today }}) </span></div>

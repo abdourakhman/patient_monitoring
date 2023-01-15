@@ -1,0 +1,69 @@
+{% extends 'layout/template.html' %}
+{% load static %}
+{% block content %}
+{% include 'layout/sidebar.html' %}
+     <div class="main-content">
+      <div class="card mb-3 my-5 overflow-auto">
+        <div class="card-header"><span class="badge badge-info">LISTE DE VOS PATIENTS({{ nb_patient }}) </span></div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Profile</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th>Date Naissance</th>
+                <th>Telephone</th>
+                <th>Courriel</th>
+               
+              </tr>
+            </thead>
+            <tbody>
+              {% for patient in patients %}
+              <tr>
+                <td> <img src<img src= {% static patient.profile.url %} alt='profile docteur' class="rounded-circle" height="90px" width="90px" > 
+                  <td>{{ patient.prenom}}</td>
+                  <td>{{ patient.nom }}</td>
+                  <td>{{ patient.naissance }}</td>
+                  <td>{{ patient.telephone }}</td>
+                  <td>{{ patient.user }}</td>
+              </tr>
+          {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="card mb-3 overflow-auto">
+        <div class="card-header"><span class="badge badge-success"> DONNEES MEDICALES DE BASE </span></div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Sexe</th>
+                <th>Groupe Sanguin</th>
+                <th>Symptome</th>
+                <th>Admission</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for patient in patients %}
+              <tr>
+                  <td>{{ patient.sexe}}</td>
+                  <td>{{ patient.groupe_sanguin }}</td>
+                  <td>{{ patient.symptoms }}</td>
+                  <td>{{ patient.admission }}</td>
+              </tr>
+          {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-light"></div> 
+{% endblock  %} 
+
+
+

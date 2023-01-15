@@ -1,0 +1,28 @@
+{% load static %}
+
+<div class="sidebar" style="background:#337AB0";>
+    <div class="text-center mb-3">
+        <img src= {% static docteur.profile.url %} alt='profile docteur' class="rounded-circle" height="160px" width="160px" >
+        <p class="mt-3 text-light bg-dark">Dr {{ docteur.prenom }} {{ docteur.nom }}</p>
+    </div>
+    <a href="#" class="text-white">
+        <i class="fas fa-home"></i>
+        Accueil
+    </a>
+    <a href="doctor/patients" class="text-white">
+        <i class="fas fa-user-injured"></i>
+        Patients
+    </a>
+    <a href="#" class="text-white">
+        <i class="fas fa-calendar-alt"></i>
+        Agenda
+    </a>
+    <a href="#" class="text-white">
+        <i class="fas fa-clipboard-list"></i>
+        Dossiers
+    </a>
+    <a href="#" class="text-white">
+        <i class="fas fa-prescription-bottle-alt"></i>
+        Ordonnance
+    </a>
+  </div>

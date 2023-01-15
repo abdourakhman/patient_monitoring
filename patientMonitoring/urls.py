@@ -1,18 +1,4 @@
-"""patientMonitoring URL Configuration
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib import admin
 from django.urls import path
@@ -25,10 +11,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home_view,name=''),
     path('docteur',views.interface_docteur,name='interface_docteur'),
-
-
-    path('aboutus', views.aboutus_view),
     path('contactus', views.contactus_view),
+
+
+    
+    
+    path('aboutus', views.aboutus_view),
 
 
     path('adminclick', views.adminclick_view),
@@ -56,6 +44,10 @@ urlpatterns = [
 
 
 
+    
+    
+    
+    
     path('admin-doctor', views.admin_doctor_view,name='admin-doctor'),
     path('admin-view-doctor', views.admin_view_doctor_view,name='admin-view-doctor'),
     path('delete-doctor-from-hospital/<int:pk>', views.delete_doctor_from_hospital_view,name='delete-doctor-from-hospital'),
@@ -67,7 +59,7 @@ urlpatterns = [
     path('admin-view-doctor-specialisation',views.admin_view_doctor_specialisation_view,name='admin-view-doctor-specialisation'),
 
 
- path('admin-assistant', views.admin_assistant_view,name='admin-assistant'),
+    path('admin-assistant', views.admin_assistant_view,name='admin-assistant'),
     path('admin-view-assistant', views.admin_view_assistant_view,name='admin-view-assistant'),
     path('delete-assistant-from-hospital/<int:pk>', views.delete_assistant_from_hospital_view,name='delete-assistant-from-hospital'),
     path('update-assistant/<int:pk>', views.update_assistant_view,name='update-assistant'),
@@ -102,8 +94,7 @@ urlpatterns = [
 #---------FOR DOCTOR RELATED URLS-------------------------------------
 urlpatterns +=[
     path('doctor-dashboard', views.doctor_dashboard_view,name='doctor-dashboard'),
-
-    path('doctor-patient', views.doctor_patient_view,name='doctor-patient'),
+    path('doctor/patients', views.doctor_patient_view,name='doctor-patient'),
     path('doctor-view-patient', views.doctor_view_patient_view,name='doctor-view-patient'),
     path('doctor-view-discharge-patient',views.doctor_view_discharge_patient_view,name='doctor-view-discharge-patient'),
 

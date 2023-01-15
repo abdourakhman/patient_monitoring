@@ -693,8 +693,40 @@ def doctor_patient_view(request):
     patients = patients.distinct()
     patient_count = patients.distinct().count()
    
-    return render(request,'docteur/patients.html',context={'patients':patients ,'nb_patient':patient_count})
+    return render(request,'docteur/patients.html',context={'patients':patients ,'nb_patient':patient_count,'docteur':docteur})
 
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)
+def doctor_agenda_view(request):
+    docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
+    all_appointments = models.RendezVous.objects.filter(docteur=docteur).order_by('date')
+    total_appointment = models.RendezVous.objects.filter(docteur=docteur).count()
+
+    data = {
+    'docteur': docteur,
+    'all_appointments': all_appointments,
+    'rdv_total':total_appointment
+    }
+    return render(request,'docteur/agenda.html',context=data)
+
+
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)
+def doctor_dossier_patients_view(request):
+    docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
+    dossiers = models.DossierMedical.objects.filter(service=docteur.service).all()
+    dossier_count = models.DossierMedical.objects.filter(service=docteur.service).all().count()
+    data ={'docteur':docteur, 'dossiers':dossiers,'nb_dossier':dossier_count}
+    return render(request,'docteur/dossierpatients.html',context=data)
+    
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)
+def doctor_prescription_view(request):
+    docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
+    ordonnances = models.Ordonnance.objects.filter(docteur=docteur).all()
+    ordonnance_count = models.Ordonnance.objects.filter(docteur=docteur).all().count()
+    data ={'docteur':docteur, 'ordonnances':ordonnances,'nb_ordonnance':ordonnance_count}
+    return render(request,'docteur/prescription.html',context=data)
 
 
 # @login_required(login_url='doctorlogin')

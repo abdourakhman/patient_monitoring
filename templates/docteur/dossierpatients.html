@@ -1,0 +1,62 @@
+{% extends 'layout/template.html' %}
+{% block content %}
+{% load static %}
+<div class="sidebar" style="background:#337AB0";>
+  <div class="text-center mb-3">
+      <img src= {% static docteur.profile.url %} alt='profile docteur' class="rounded-circle" height="160px" width="160px" >
+      <p class="mt-3 text-light bg-dark">Dr {{ docteur.prenom }} {{ docteur.nom }}</p>
+  </div>
+  <a href="dashboard" class="text-white">
+      <i class="fas fa-home"></i>
+      Accueil
+  </a>
+  <a href="patients" class="text-white">
+      <i class="fas fa-user-injured"></i>
+      Patients
+  </a>
+  <a href="agenda" class="text-white">
+      <i class="fas fa-calendar-alt"></i>
+      Agenda
+  </a>
+  <a href="dossier_patients" class="text-white">
+      <i class="fas fa-clipboard-list"></i>
+      Dossiers
+  </a>
+  <a href="prescription" class="text-white">
+      <i class="fas fa-prescription-bottle-alt"></i>
+      Ordonnances
+  </a>
+</div>
+     <div class="main-content mt-1">
+        <div class="card mb-3 my-5 overflow-auto shadow">
+            <div class="card-header" style:color="red"><span class="badge btn-info"> DOSSIER DE VOS PATIENTS ({{ nb_dossier }}) </span></div>
+                <div class="card-body overflow-auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="color: #337AB7;">Patient</th>
+                                <th style="color: #337AB7;">N° Dossier</th>
+                                <th style="color: #337AB7;">Création dossier</th>
+                                <th style="color: #337AB7;">Dernière modification dossier</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for dossier in dossiers %}
+                        <tr>
+                            <td>{{ dossier.patient }}</td>
+                            <td>{{ dossier.numero }}</td>
+                            <td>{{ dossier.creation }}</td>
+                            <td>{{ dossier.miseAjour}}</td>
+                        </tr>
+                    {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-light"></div> 
+{% endblock  %} 

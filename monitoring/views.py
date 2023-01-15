@@ -145,7 +145,7 @@ def afterlogin_view(request):
     elif is_doctor(request.user):
         accountapproval=models.Docteur.objects.all().filter(user_id=request.user.id)
         if accountapproval:
-            return redirect('doctor-dashboard')
+            return redirect('doctor/dashboard')
         else:
             return render(request,'hospital/doctor_wait_for_approval.html')
     elif is_assistant(request.user):
@@ -699,13 +699,26 @@ def doctor_patient_view(request):
 @user_passes_test(is_doctor)
 def doctor_agenda_view(request):
     docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
+    today_appointments = models.RendezVous.objects.filter(docteur=docteur, date__date=timezone.now().date()).all()
     all_appointments = models.RendezVous.objects.filter(docteur=docteur).order_by('date')
-    total_appointment = models.RendezVous.objects.filter(docteur=docteur).count()
+    today = datetime.now().date()
+    today = date.today()
+    tomorrow = today + timedelta(days=1)
+    future_appointments = models.RendezVous.objects.filter(docteur=docteur, date__gte=tomorrow).all()
+    past_appointments = models.RendezVous.objects.filter(docteur=docteur, date__lt=today).all()
+    rdv_today = today_appointments.count()
+    next_rdv = future_appointments.count()
+    past_rdv = past_appointments.count()
+    total_appointment = all_appointments.count()
 
     data = {
     'docteur': docteur,
-    'all_appointments': all_appointments,
-    'rdv_total':total_appointment
+    'today_appointments':today_appointments,
+    'rdv_today': rdv_today,
+    'future_appointments':future_appointments,
+    'next_rdv':next_rdv,
+    'past_appointments':past_appointments,
+    'past_rdv':past_rdv
     }
     return render(request,'docteur/agenda.html',context=data)
 

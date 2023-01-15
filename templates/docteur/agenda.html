@@ -29,7 +29,7 @@
 </div>
      <div class="main-content">
         <div class="card mb-3 my-5 overflow-auto shadow">
-            <div class="card-header" style:color="red"><span class="badge btn-info">TOUT VOS RENDEZ-VOUS ({{ rdv_total }}) </span></div>
+            <div class="card-header" style:color="red"><span class="badge btn-success">PROCHAIN RENDEZ-VOUS ({{ next_rdv }}) </span></div>
                 <div class="card-body overflow-auto">
                     <table class="table">
                         <thead>
@@ -42,7 +42,79 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {% for rdv in all_appointments %}
+                        {% for rdv in future_appointments %}
+                        <tr>
+                            <td>{{ rdv.patients }}</td>
+                            <td>{{ rdv.date|date:"d-m-Y"  }}</td>
+                            <td>{{ rdv.date|time:"H:i" }}</td>
+                            <td>{{ rdv.motif}}</td>
+                            <td>
+                                {% if rdv.priorite == "Urgent" %}
+                                    <span class="badge badge-danger">Urgent</span>
+                                {% elif rdv.priorite == "Moyen" %}
+                                    <span class="badge badge-warning">Moyen</span>
+                                {% else %}
+                                    <span class="badge badge-success">Faible</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        <div class="card mb-3 my-5 overflow-auto shadow">
+            <div class="card-header" style:color="red"><span class="badge btn-danger">RENDEZ-VOUS DU JOUR ({{ rdv_today }}) </span></div>
+                <div class="card-body overflow-auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="color: #337AB7;">Patient</th>
+                                <th style="color: #337AB7;">Date</th>
+                                <th style="color: #337AB7;">Heure</th>
+                                <th style="color: #337AB7;">Motif</th>
+                                <th style="color: #337AB7;">Priorité</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for rdv in today_appointments %}
+                        <tr>
+                            <td>{{ rdv.patients }}</td>
+                            <td>{{ rdv.date|date:"d-m-Y"  }}</td>
+                            <td>{{ rdv.date|time:"H:i" }}</td>
+                            <td>{{ rdv.motif}}</td>
+                            <td>
+                                {% if rdv.priorite == "Urgent" %}
+                                    <span class="badge badge-danger">Urgent</span>
+                                {% elif rdv.priorite == "Moyen" %}
+                                    <span class="badge badge-warning">Moyen</span>
+                                {% else %}
+                                    <span class="badge badge-success">Faible</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        <div class="card mb-3 my-5 overflow-auto shadow">
+            <div class="card-header" style:color="red"><span class="badge btn-info"> RENDEZ-VOUS PASSES ({{ past_rdv }}) </span></div>
+                <div class="card-body overflow-auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="color: #337AB7;">Patient</th>
+                                <th style="color: #337AB7;">Date</th>
+                                <th style="color: #337AB7;">Heure</th>
+                                <th style="color: #337AB7;">Motif</th>
+                                <th style="color: #337AB7;">Priorité</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for rdv in past_appointments %}
                         <tr>
                             <td>{{ rdv.patients }}</td>
                             <td>{{ rdv.date|date:"d-m-Y"  }}</td>

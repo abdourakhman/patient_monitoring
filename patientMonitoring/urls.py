@@ -49,8 +49,9 @@ urlpatterns +=[
     path('doctor/agenda', views.doctor_agenda_view,name='doctor-agenda'),
     path('doctor/agenda/add_rv', views.add_rv_view,name='doctor-add-rv'),
     path('doctor/dossier_patients', views.doctor_dossier_patients_view,name='doctor-dossier'),
-    path('doctor/prescription', views.doctor_prescription_view,name='doctor-ordonnance'),
+    path('doctor/prescription', views.doctor_prescription_view,name='doctor-prescription'),
     path('doctor/patients', views.doctor_patient_view,name='doctor-patient'),
+    path('doctor/add_prescription', views.doctor_add_prescription_view,name='doctor-add-prescription')
 ]
 
     

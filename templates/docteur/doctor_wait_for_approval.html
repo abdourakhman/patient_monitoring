@@ -26,22 +26,22 @@
 </head>
 
 <body>
-  {% include "hospital/navbar.html" %}
+  {% include "layout/navbar.html" %}
   <br>
   <br>
 
   <div class="jumbotron" style="margin-top: 0px;
     margin-bottom: 0px;">
-    <h1 class="display-4">Hello {{request.user.first_name}}</h1>
-    <p class="lead">Your Account is not approved till now <br><br>Our Team is checking your profile <br><br> Soon your Account will be confirmed !!!</p>
+    <h1 class="display-4">Bonjour {{docteur}}</h1>
+    <p class="lead">Votre compte n'est pas encore activé...<br><br>Notre équipe vérifie votre profil<br><br> Encore un peu de patience et vous pourrez connecter !!!</p>
     <hr class="my-4">
-    <p>Check Later</p>
+    <p>Revenez plus tard...</p>
     <p class="lead">
-      <a class="btn btn-primary btn-lg" href="/logout" role="button">Logout For Now</a>
+      <a class="btn btn-primary btn-lg" href="/logout" role="button">Deconnectez-vous Maintenant !</a>
     </p>
   </div>
 
-  {% include "hospital/footer.html" %}
+  {% include "layout/footer.html" %}
 </body>
 
 

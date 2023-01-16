@@ -39,18 +39,18 @@
                 <th>Nom</th>
                 <th>Date Naissance</th>
                 <th>Telephone</th>
-                <th>Courriel</th>
+                <th>Date Admission</th>
               </tr>
             </thead>
             <tbody>
               {% for patient in patients %}
               <tr>
-                <td> <img src<img src= {% static patient.profile.url %} alt='profile docteur' class="rounded-circle" height="90px" width="90px" > 
+                <td> <img src<img src= {% static patient.profile.url %} alt='profile patient' class="rounded-circle" height="80px" width="80px" > 
                   <td>{{ patient.prenom}}</td>
                   <td>{{ patient.nom }}</td>
                   <td>{{ patient.naissance }}</td>
                   <td>{{ patient.telephone }}</td>
-                  <td>{{ patient.user }}</td>
+                  <td>{{ patient.admission }}</td>
               </tr>
           {% endfor %}
             </tbody>
@@ -76,9 +76,9 @@
               <tr>
                   <td>{{ patient.prenom}} {{ patient.nom}}</td>
                   {% if patient.sexe == "M" %}
-                      <td class="ml-3 badge btn-primary">H</td>
+                      <td class="ml-3 badge text-dark btn-primary">H</td>
                   {% else %}
-                      <td class=" ml-3 badge btn-danger">F</td>
+                      <td class=" ml-3 badge text-dark btn-danger">F</td>
                   {% endif %}
                   <td><span class=' ml-5 text-danger'>{{ patient.groupe_sanguin }}</span></td>
                   <td>{{ patient.symptoms }}</td>

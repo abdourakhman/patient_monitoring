@@ -25,7 +25,8 @@
       <div class="col-md-12 col-sm-12 bg-light">
         <div class="wow fadeInUp footer-copyright mt-1">
           <p style="color: #337AB7; text-align:left; font-size:0.95em; padding:auto;">
-            &copy; 2023 Developed By ARN</p>
+            {% now "Y" as current_year %}
+            Copyright &copy; <em>{{ current_year }}</em> By ARN</p>
         </div>
       </div>
     </div>

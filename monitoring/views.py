@@ -143,24 +143,26 @@ def afterlogin_view(request):
     if is_admin(request.user):
         return redirect('admin-dashboard')
     elif is_doctor(request.user):
-        accountapproval=models.Docteur.objects.all().filter(user_id=request.user.id)
+        docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
+        docteur = docteur.get_full_name()
+        accountapproval=models.Docteur.objects.all().filter(status=True,user_id=request.user.id)
         if accountapproval:
             return redirect('doctor/dashboard')
         else:
-            return render(request,'hospital/doctor_wait_for_approval.html')
+            return render(request,'docteur/doctor_wait_for_approval.html',context={'docteur':docteur})
     elif is_assistant(request.user):
-        accountapproval=models.Secretaire.objects.all().filter(user_id=request.user.id)
+        accountapproval=models.Secretaire.objects.all().filter(status=True,user_id=request.user.id)
         if accountapproval:
             return redirect('assistant-dashboard')
         else:
             return render(request,'hospital/assistant_wait_for_approval.html')    
     elif is_patient(request.user):
-        accountapproval=models.Patient.objects.all().filter(user_id=request.user.id)
+        accountapproval=models.Patient.objects.all().filter(status=True, user_id=request.user.id)
         if accountapproval:
             return redirect('patient-dashboard')
         else:
             return render(request,'hospital/patient_wait_for_approval.html')
-
+    return HttpResponseRedirect()
 
 
 #---------------------------------------------------------------------------------
@@ -169,17 +171,13 @@ def afterlogin_view(request):
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def add_rv_view(request):
-    # if request.method == 'GET':
     rvForm = forms.Rendez_vousForm(request.POST)
-    print(1)
     if rvForm.is_valid():
-        print(2)
         date = rvForm.cleaned_data['date']
         heure = rvForm.cleaned_data['heure']
         date_heure = datetime.datetime.combine(date, heure)
         rvForm.cleaned_data['date'] = date_heure
         rv = rvForm.save()
-        print(3)
         return HttpResponseRedirect('doctor/agenda')
     return render(request, 'docteur/agenda.html')
 
@@ -701,10 +699,9 @@ def doctor_dashboard_view(request):
 
 
 
-@login_required(login_url='doctorlogin')
+# @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_patient_view(request):
-
     docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
     patients_service = models.Patient.objects.filter(services=docteur.service)
     # Récupération des patients liés aux rendez-vous du docteur connecté
@@ -712,10 +709,10 @@ def doctor_patient_view(request):
     # Récupération des patients liés au service du docteur connecté et aux rendez-vous du docteur connecté
     patients = patients_service | patients_appointments
     # Suppression des duplicatas
-    patients = patients.distinct()
+    patients = patients.distinct().order_by('admission')
     patient_count = patients.distinct().count()
-   
-    return render(request,'docteur/patients.html',context={'patients':patients ,'nb_patient':patient_count,'docteur':docteur})
+    data={'patients':patients ,'nb_patient':patient_count,'docteur':docteur}
+    return render(request,'docteur/patients.html',context=data)
 
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
@@ -779,44 +776,19 @@ def doctor_prescription_view(request):
     return render(request,'docteur/prescription.html',context=data)
 
 
-# @login_required(login_url='doctorlogin')
-# @user_passes_test(is_doctor)
-def doctor_view_patient_view(request):
-    patients=models.Patient.objects.all().filter(status=True,assignedDoctorId=request.user.id)
-    doctor=models.Doctor.objects.get(user_id=request.user.id) #for profile picture of doctor in sidebar
-    return render(request,'hospital/doctor_view_patient.html',{'patients':patients,'doctor':doctor})
-
-
-
-# @login_required(login_url='doctorlogin')
-# @user_passes_test(is_doctor)
-def doctor_view_discharge_patient_view(request):
-    dischargedpatients=models.PatientDischargeDetails.objects.all().distinct().filter(assignedDoctorName=request.user.first_name)
-    doctor=models.Doctor.objects.get(user_id=request.user.id) #for profile picture of doctor in sidebar
-    return render(request,'hospital/doctor_view_discharge_patient.html',{'dischargedpatients':dischargedpatients,'doctor':doctor})
-
-
-
-# @login_required(login_url='doctorlogin')
-# @user_passes_test(is_doctor)
-def doctor_appointment_view(request):
-    doctor=models.Doctor.objects.get(user_id=request.user.id) #for profile picture of doctor in sidebar
-    return render(request,'hospital/doctor_appointment.html',{'doctor':doctor})
-
-
-
-# @login_required(login_url='doctorlogin')
-# @user_passes_test(is_doctor)
-def doctor_view_appointment_view(request):
-    doctor=models.Doctor.objects.get(user_id=request.user.id) #for profile picture of doctor in sidebar
-    appointments=models.Appointment.objects.all().filter(status=True,doctorId=request.user.id)
-    patientid=[]
-    for a in appointments:
-        patientid.append(a.patientId)
-    patients=models.Patient.objects.all().filter(status=True,user_id__in=patientid)
-    appointments=zip(appointments,patients)
-    return render(request,'hospital/doctor_view_appointment.html',{'appointments':appointments,'doctor':doctor})
-
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)
+def doctor_add_prescription_view(request):
+    ordonnanceForm = forms.OrdonnanceForm()
+    docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
+    ordonnanceForm=forms.OrdonnanceForm(initial={'docteur': docteur})
+    if request.method == 'POST':
+        ordonnanceForm = forms.OrdonnanceForm(request.POST)
+        if ordonnanceForm.is_valid():
+            ordonnanceForm.cleaned_data['docteur'] = docteur
+            ordonnanceForm.save()
+        return HttpResponseRedirect('prescription')
+    return render(request,'docteur/addprescription.html',context={'ordonnanceForm':ordonnanceForm})
 
 
 # @login_required(login_url='doctorlogin')

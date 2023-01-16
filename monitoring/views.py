@@ -163,6 +163,28 @@ def afterlogin_view(request):
 
 
 
+#---------------------------------------------------------------------------------
+#------------------------ DOCTOR RELATED ROLE VIEWS START ------------------------------
+#---------------------------------------------------------------------------------
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)
+def add_rv_view(request):
+    # if request.method == 'GET':
+    rvForm = forms.Rendez_vousForm(request.POST)
+    print(1)
+    if rvForm.is_valid():
+        print(2)
+        date = rvForm.cleaned_data['date']
+        heure = rvForm.cleaned_data['heure']
+        date_heure = datetime.datetime.combine(date, heure)
+        rvForm.cleaned_data['date'] = date_heure
+        rv = rvForm.save()
+        print(3)
+        return HttpResponseRedirect('doctor/agenda')
+    return render(request, 'docteur/agenda.html')
+
+
+
 
 
 
@@ -710,8 +732,23 @@ def doctor_agenda_view(request):
     next_rdv = future_appointments.count()
     past_rdv = past_appointments.count()
     total_appointment = all_appointments.count()
-
+    
+    #----------------Ajout RV-------------------#
+    form = False
+    patients_service = models.Patient.objects.filter(services=docteur.service)
+    # Récupération des patients liés aux rendez-vous du docteur connecté
+    patients_appointments = models.Patient.objects.filter(rendez_vous_patient__docteur=docteur)
+    # Récupération des patients liés au service du docteur connecté et aux rendez-vous du docteur connecté
+    patients = patients_service | patients_appointments
+    # Suppression des duplicatas
+    patients = patients.distinct()
+    if request.method == 'GET':
+        form = True 
+    rvForm=forms.Rendez_vousForm(initial={'docteur': docteur.get_full_name()})
+    rvForm.fields['patients'].queryset = patients.order_by('prenom')
     data = {
+    'rvForm':rvForm,
+    'form':form,
     'docteur': docteur,
     'today_appointments':today_appointments,
     'rdv_today': rdv_today,

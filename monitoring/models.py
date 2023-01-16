@@ -1,6 +1,7 @@
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
-
+import time
 
 departments=[('Cardiologie', 'Cardiologue'), ('Dermatologie', 'Dermatologue'), ('Urgence', 'Urgentiste'), ('Allergie/Immunologie', 'Allergiste/Immunologiste'), ('Chirurgie', 'Anesthesiste'), ('Biologie', 'Biologiste'), ('Radiologie', 'Radiologue'), ('Ophtalmologie', 'Ophtalmologue'), ('Odontologie', 'Dentiste'), ('Pharmacie', 'Pharmacien'), ('Consultation', 'Généraliste'), ('Laboratoire', 'Chimiste'), ('Reanimation', 'Chirurgien')]
 services=[('Cardiologie', 'Cardiologie'), ('Dermatologie', 'Dermatologie'), ('Urgence', 'Urgence'), ('Allergie/Immunologie', 'Allergie/Immunologie'), ('Chirurgie', 'Chirurgie'), ('Radiologie', 'Radiologie'), ('Radiologie', 'Radiologie'), ('Ophtalmologie', 'Ophtalmologie'), ('Odontologie', 'Odontologie'), ('Pharmacie', 'Pharmacie'), ('Consultation', 'Consultation'), ('Laboratoire', 'Laboratoire'), ('Reanimation', 'Reanimation')]
@@ -39,10 +40,12 @@ class Docteur(models.Model):
     profile = models.ImageField(upload_to='profile_pic/DocteurProfilePic/', null=True, blank=True)
     service = models.ForeignKey("Service", on_delete=models.SET_DEFAULT,null=False,default=0)
     status=models.BooleanField(default=False)
+    def get_full_name(self):
+        return f"{self.prenom} {self.nom}"
 
 
     def __str__(self):
-        return f" {self.user.email}/{self.prenom} {self.nom}"
+        return f"{self.prenom} {self.nom}"
 
 class Secretaire(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_secretaire')
@@ -101,6 +104,7 @@ class DossierMedical(models.Model):
 
 class RendezVous(models.Model):
     date = models.DateTimeField(null=False)
+    heure = models.TimeField(null=False,default=datetime.time(8, 0))
     motif = models.CharField(max_length=255, null=True, default="Aucun motif particulier")
     priorite = models.CharField(max_length=7, null=False,choices=[('Urgent','Urgent'),('Moyen','Moyen'),('Faible','Faible')],default='Moyen')
     docteur = models.ForeignKey("Docteur", on_delete=models.CASCADE,related_name='rendez_vous_docteur')

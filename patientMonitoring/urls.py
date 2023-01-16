@@ -41,64 +41,65 @@ urlpatterns = [
 
     path('afterlogin', views.afterlogin_view,name='afterlogin'),
     path('logout', LogoutView.as_view(template_name='home/index.html'),name='logout'),
-
-
-
-    
-    
-    
-    
-    path('admin-doctor', views.admin_doctor_view,name='admin-doctor'),
-    path('admin-view-doctor', views.admin_view_doctor_view,name='admin-view-doctor'),
-    path('delete-doctor-from-hospital/<int:pk>', views.delete_doctor_from_hospital_view,name='delete-doctor-from-hospital'),
-    path('update-doctor/<int:pk>', views.update_doctor_view,name='update-doctor'),
-    path('admin-add-doctor', views.admin_add_doctor_view,name='admin-add-doctor'),
-    path('admin-approve-doctor', views.admin_approve_doctor_view,name='admin-approve-doctor'),
-    path('approve-doctor/<int:pk>', views.approve_doctor_view,name='approve-doctor'),
-    path('reject-doctor/<int:pk>', views.reject_doctor_view,name='reject-doctor'),
-    path('admin-view-doctor-specialisation',views.admin_view_doctor_specialisation_view,name='admin-view-doctor-specialisation'),
-
-
-    path('admin-assistant', views.admin_assistant_view,name='admin-assistant'),
-    path('admin-view-assistant', views.admin_view_assistant_view,name='admin-view-assistant'),
-    path('delete-assistant-from-hospital/<int:pk>', views.delete_assistant_from_hospital_view,name='delete-assistant-from-hospital'),
-    path('update-assistant/<int:pk>', views.update_assistant_view,name='update-assistant'),
-    path('admin-add-assistant', views.admin_add_assistant_view,name='admin-add-assistant'),
-    path('admin-approve-assistant', views.admin_approve_assistant_view,name='admin-approve-assistant'),
-    path('approve-assistant/<int:pk>', views.approve_assistant_view,name='approve-assistant'),
-    path('reject-assistant/<int:pk>', views.reject_assistant_view,name='reject-assistant'),
-   
-
-    path('admin-patient', views.admin_patient_view,name='admin-patient'),
-    path('admin-view-patient', views.admin_view_patient_view,name='admin-view-patient'),
-    path('delete-patient-from-hospital/<int:pk>', views.delete_patient_from_hospital_view,name='delete-patient-from-hospital'),
-    path('update-patient/<int:pk>', views.update_patient_view,name='update-patient'),
-    path('admin-add-patient', views.admin_add_patient_view,name='admin-add-patient'),
-    path('admin-approve-patient', views.admin_approve_patient_view,name='admin-approve-patient'),
-    path('approve-patient/<int:pk>', views.approve_patient_view,name='approve-patient'),
-    path('reject-patient/<int:pk>', views.reject_patient_view,name='reject-patient'),
-    path('admin-discharge-patient', views.admin_discharge_patient_view,name='admin-discharge-patient'),
-    path('discharge-patient/<int:pk>', views.discharge_patient_view,name='discharge-patient'),
-    path('download-pdf/<int:pk>', views.download_pdf_view,name='download-pdf'),
-
-
-    path('admin-appointment', views.admin_appointment_view,name='admin-appointment'),
-    path('admin-view-appointment', views.admin_view_appointment_view,name='admin-view-appointment'),
-    path('admin-add-appointment', views.admin_add_appointment_view,name='admin-add-appointment'),
-    path('admin-approve-appointment', views.admin_approve_appointment_view,name='admin-approve-appointment'),
-    path('approve-appointment/<int:pk>', views.approve_appointment_view,name='approve-appointment'),
-    path('reject-appointment/<int:pk>', views.reject_appointment_view,name='reject-appointment'),
 ]
-
 
 #---------FOR DOCTOR RELATED URLS-------------------------------------
 urlpatterns +=[
-    path('doctor/dashboard', views.doctor_dashboard_view,name='doctor-dashboard'),
-    path('doctor/agenda', views.doctor_agenda_view,name='doctor-dashboard'),
-    path('doctor/dossier_patients', views.doctor_dossier_patients_view,name='doctor-dashboard'),
-    path('doctor/prescription', views.doctor_prescription_view,name='doctor-dashboard'),
+    path('doctor/dashboard', views.doctor_dashboard_view,name='doctor-ashboard'),
+    path('doctor/agenda', views.doctor_agenda_view,name='doctor-agenda'),
+    path('doctor/agenda/add_rv', views.add_rv_view,name='doctor-add-rv'),
+    path('doctor/dossier_patients', views.doctor_dossier_patients_view,name='doctor-dossier'),
+    path('doctor/prescription', views.doctor_prescription_view,name='doctor-ordonnance'),
     path('doctor/patients', views.doctor_patient_view,name='doctor-patient'),
 ]
+
+    
+    
+    
+    
+#     path('admin-doctor', views.admin_doctor_view,name='admin-doctor'),
+#     path('admin-view-doctor', views.admin_view_doctor_view,name='admin-view-doctor'),
+#     path('delete-doctor-from-hospital/<int:pk>', views.delete_doctor_from_hospital_view,name='delete-doctor-from-hospital'),
+#     path('update-doctor/<int:pk>', views.update_doctor_view,name='update-doctor'),
+#     path('admin-add-doctor', views.admin_add_doctor_view,name='admin-add-doctor'),
+#     path('admin-approve-doctor', views.admin_approve_doctor_view,name='admin-approve-doctor'),
+#     path('approve-doctor/<int:pk>', views.approve_doctor_view,name='approve-doctor'),
+#     path('reject-doctor/<int:pk>', views.reject_doctor_view,name='reject-doctor'),
+#     path('admin-view-doctor-specialisation',views.admin_view_doctor_specialisation_view,name='admin-view-doctor-specialisation'),
+
+
+#     path('admin-assistant', views.admin_assistant_view,name='admin-assistant'),
+#     path('admin-view-assistant', views.admin_view_assistant_view,name='admin-view-assistant'),
+#     path('delete-assistant-from-hospital/<int:pk>', views.delete_assistant_from_hospital_view,name='delete-assistant-from-hospital'),
+#     path('update-assistant/<int:pk>', views.update_assistant_view,name='update-assistant'),
+#     path('admin-add-assistant', views.admin_add_assistant_view,name='admin-add-assistant'),
+#     path('admin-approve-assistant', views.admin_approve_assistant_view,name='admin-approve-assistant'),
+#     path('approve-assistant/<int:pk>', views.approve_assistant_view,name='approve-assistant'),
+#     path('reject-assistant/<int:pk>', views.reject_assistant_view,name='reject-assistant'),
+   
+
+#     path('admin-patient', views.admin_patient_view,name='admin-patient'),
+#     path('admin-view-patient', views.admin_view_patient_view,name='admin-view-patient'),
+#     path('delete-patient-from-hospital/<int:pk>', views.delete_patient_from_hospital_view,name='delete-patient-from-hospital'),
+#     path('update-patient/<int:pk>', views.update_patient_view,name='update-patient'),
+#     path('admin-add-patient', views.admin_add_patient_view,name='admin-add-patient'),
+#     path('admin-approve-patient', views.admin_approve_patient_view,name='admin-approve-patient'),
+#     path('approve-patient/<int:pk>', views.approve_patient_view,name='approve-patient'),
+#     path('reject-patient/<int:pk>', views.reject_patient_view,name='reject-patient'),
+#     path('admin-discharge-patient', views.admin_discharge_patient_view,name='admin-discharge-patient'),
+#     path('discharge-patient/<int:pk>', views.discharge_patient_view,name='discharge-patient'),
+#     path('download-pdf/<int:pk>', views.download_pdf_view,name='download-pdf'),
+
+
+#     path('admin-appointment', views.admin_appointment_view,name='admin-appointment'),
+#     path('admin-view-appointment', views.admin_view_appointment_view,name='admin-view-appointment'),
+#     path('admin-add-appointment', views.admin_add_appointment_view,name='admin-add-appointment'),
+#     path('admin-approve-appointment', views.admin_approve_appointment_view,name='admin-approve-appointment'),
+#     path('approve-appointment/<int:pk>', views.approve_appointment_view,name='approve-appointment'),
+#     path('reject-appointment/<int:pk>', views.reject_appointment_view,name='reject-appointment'),
+# ]
+
+
 
 
 #---------FOR assistant RELATED URLS-------------------------------------

@@ -56,7 +56,7 @@ class PatientForm(forms.ModelForm):
     class Meta:
         model=models.Patient
         fields=['prenom','nom','naissance','sexe','telephone','symptoms','groupe_sanguin','secretaire','services', 'profile']
-        widget = {'naissance':forms.DateInput()}
+        widgets = {'naissance':forms.DateInput()}
 
 
 # # class AppointmentForm(forms.ModelForm):
@@ -80,3 +80,12 @@ class ContactusForm(forms.Form):
     Email = forms.EmailField()
     Message = forms.CharField(max_length=500,widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
 
+class Rendez_vousForm(forms.ModelForm):
+    class Meta:
+        model=models.RendezVous
+        fields=['date','heure','motif','priorite','docteur','patients']
+        widgets = {
+            # 'date': forms.DateInput(),
+            # 'heure':forms.TimeInput(),
+            'docteur': forms.TextInput(attrs={'disabled': 'disabled'}),
+        }

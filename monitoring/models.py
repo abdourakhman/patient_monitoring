@@ -103,7 +103,7 @@ class DossierMedical(models.Model):
         return f"Dossier n°{self.numero}/ {self.service}"
 
 class RendezVous(models.Model):
-    date = models.DateTimeField(null=False)
+    date = models.DateField(null=False)
     heure = models.TimeField(null=False,default=datetime.time(8, 0))
     motif = models.CharField(max_length=255, null=True, default="Aucun motif particulier")
     priorite = models.CharField(max_length=7, null=False,choices=[('Urgent','Urgent'),('Moyen','Moyen'),('Faible','Faible')],default='Moyen')

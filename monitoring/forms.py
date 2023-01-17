@@ -84,17 +84,14 @@ class Rendez_vousForm(forms.ModelForm):
     class Meta:
         model=models.RendezVous
         fields=['date','heure','motif','priorite','docteur','patients']
-        widgets = {
-            'docteur': forms.TextInput(attrs={'disabled': 'disabled'}),
-        }
-
+        
 #For prescription
 class OrdonnanceForm(forms.ModelForm):
     class Meta:
         model=models.Ordonnance
         fields = ['contenu', 'docteur', 'dossier_medical'] 
         # widgets = {'docteur': forms.TextInput(attrs={'disabled': 'disabled'}),
-        # }
+        #  }
 
 
 class DossierForm(forms.ModelForm):

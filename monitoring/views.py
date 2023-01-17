@@ -172,14 +172,14 @@ def afterlogin_view(request):
 @user_passes_test(is_doctor)
 def add_rv_view(request):
     rvForm = forms.Rendez_vousForm(request.POST)
+    docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
+    rvForm=forms.Rendez_vousForm(initial={'docteur': docteur})
     if rvForm.is_valid():
-        date = rvForm.cleaned_data['date']
-        heure = rvForm.cleaned_data['heure']
-        date_heure = datetime.datetime.combine(date, heure)
-        rvForm.cleaned_data['date'] = date_heure
+
+        rvForm.cleaned_data['docteur']=models.Docteur.objects.filter(user_id=request.user.id).get()
         rv = rvForm.save()
-        return HttpResponseRedirect('doctor/agenda')
-    return render(request, 'docteur/agenda.html')
+        return HttpResponseRedirect('agenda')
+    return render(request,'docteur/addRV.html',context={'rvForm':rvForm})
 
 
 
@@ -662,19 +662,16 @@ def doctor_dashboard_view(request):
 
     docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
 
-    today_appointments = models.RendezVous.objects.filter(docteur=docteur, date__date=timezone.now().date()).all()
-    all_appointments = models.RendezVous.objects.filter(docteur=docteur).order_by('date')
-
     today = datetime.now().date()
-    rdv_today = today_appointments.count()
-
-    today = date.today()
+    today_appointments = models.RendezVous.objects.filter(docteur=docteur, date=today).all()
+    all_appointments = models.RendezVous.objects.filter(docteur=docteur).order_by('date')
     tomorrow = today + timedelta(days=1)
     future_appointments = models.RendezVous.objects.filter(docteur=docteur, date__gte=tomorrow).all()
-   
+    rdv_today = today_appointments.count()
+    next_rdv = future_appointments.count()
+
     patients_service = models.Patient.objects.filter(services=docteur.service)
 
-    next_rdv = future_appointments.count()
     # Récupération des patients liés aux rendez-vous du docteur connecté
     patients_appointments = models.Patient.objects.filter(rendez_vous_patient__docteur=docteur)
 
@@ -718,17 +715,14 @@ def doctor_patient_view(request):
 @user_passes_test(is_doctor)
 def doctor_agenda_view(request):
     docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
-    today_appointments = models.RendezVous.objects.filter(docteur=docteur, date__date=timezone.now().date()).all()
-    all_appointments = models.RendezVous.objects.filter(docteur=docteur).order_by('date')
     today = datetime.now().date()
-    today = date.today()
+    today_appointments = models.RendezVous.objects.filter(docteur=docteur, date=today).all()
     tomorrow = today + timedelta(days=1)
     future_appointments = models.RendezVous.objects.filter(docteur=docteur, date__gte=tomorrow).all()
     past_appointments = models.RendezVous.objects.filter(docteur=docteur, date__lt=today).all()
     rdv_today = today_appointments.count()
     next_rdv = future_appointments.count()
     past_rdv = past_appointments.count()
-    total_appointment = all_appointments.count()
     
     #----------------Ajout RV-------------------#
     form = False
@@ -782,6 +776,7 @@ def doctor_add_prescription_view(request):
     ordonnanceForm = forms.OrdonnanceForm()
     docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
     ordonnanceForm=forms.OrdonnanceForm(initial={'docteur': docteur})
+    print(docteur)
     if request.method == 'POST':
         ordonnanceForm = forms.OrdonnanceForm(request.POST)
         if ordonnanceForm.is_valid():

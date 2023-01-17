@@ -46,11 +46,11 @@
 
         <div class="form-content">
           <div class="row">
-              <div class="col-md-4 ">
-                  <label for="contenu" class="col-form-label">Docteur:</label>
-                    {% render_field ordonnanceForm.docteur class="form-control"%}
+              <div class="col-md-4 col-sm-6">
+                  <label for="contenu" class="col-form-label">Docteur: {{ docteur }}</label>
+                    {% render_field ordonnanceForm.docteur class="form-control" disabled="disabled" %}
               </div>
-              <div class="offset-2 col-md-6">
+              <div class="offset-2 col-md-6 col-sm-4">
                 <label for="contenu" class="col-form-label">Dossier Patient:</label>
                   {% render_field ordonnanceForm.dossier_medical class="form-control"%}           
               </div>
@@ -62,10 +62,12 @@
                 {% render_field ordonnanceForm.contenu class="form-control"%}
               </div>
               <div class="row">
-                <div class="offset-9">
-                  <a href="http://127.0.0.1:8000/doctor/prescription" class="btn btn-lg btn-secondary">Retour</a>
-                  <button type="submit"  class="btn btn-lg btn-success ml-5">Valider</button>
-                </div>
+                  <div class="col-md-2 col-sm-6">
+                    <a href="http://127.0.0.1:8000/doctor/prescription" class="btn btn-lg btn-secondary">Retour</a>
+                  </div>
+                  <div class="col-md-2 col-sm-6">
+                    <button type="submit"  class="btn btn-lg btn-success ml-5">Valider</button>
+                  </div>
               </div>
           </div>
       </div>

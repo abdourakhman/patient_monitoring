@@ -29,58 +29,10 @@
   </a>
 </div>
      <div class="main-content">
-        <button style="margin-top:5%; background-color: #337AB7;" type="button" class=" text-light btn" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Nouveau Rendez-Vous</button>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div>
     <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h6 class="modal-title" id="exampleModalLabel">Planifier un rendez-vous</h6>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form method="post">
-                {% csrf_token %}
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Patient:</label>
-                {% render_field rvForm.patients class="form-control" id="recipient-name"  %}
-            </div>
-            <div class="form-group">
-                {% render_field rvForm.docteur class="form-control" id="recipient-name" %}
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Motif:</label>
-                {% render_field rvForm.motif class="form-control" id="recipient-name"  %}
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Priorite:</label>
-                {% render_field rvForm.priorite class="form-control" id="recipient-name"  %}
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Date & Heure :</label>
-                {% if form %}
-                    {% render_field rvForm.date class="form-control" id="recipient-name" type="date" %}
-                {% else %}
-                    {% render_field rvForm.date class="form-control" id="recipient-name"  %}
-                {% endif %}
-            </div> 
-            <div class="form-group">
-                {% if form %}
-                {% render_field rvForm.heure class="form-control" id="recipient-name" type="time" %}
-                {% else %}
-                {% render_field rvForm.heure class="form-control" id="recipient-name" %}
-                {% endif %}
-            </div> 
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
-            <button type="submit" data-dismiss="toast" formaction="/doctor/agenda/add_rdv" formmethod="post" class="btn btn-primary">Planifier</button>
-        </div>
-        </div>
     </div>
-    </div>
+    <a class="btn text-white" href="add_rv" style="margin-top:2%; background-color: #337AB7;">Nouveau Rendez-Vous</a>
         <div class="card mb-3 mt-3 overflow-auto shadow">
             <div class="card-header"><span class="badge btn-success">PROCHAIN RENDEZ-VOUS ({{ next_rdv }}) </span></div>
                 <div class="card-body overflow-auto">
@@ -98,8 +50,8 @@
                         {% for rdv in future_appointments %}
                         <tr>
                             <td>{{ rdv.patients }}</td>
-                            <td>{{ rdv.date|date:"d-m-Y"  }}</td>
-                            <td>{{ rdv.date|time:"H:i" }}</td>
+                            <td>{{ rdv.date  }}</td>
+                            <td>{{ rdv.heure }}</td>
                             <td>{{ rdv.motif}}</td>
                             <td>
                                 {% if rdv.priorite == "Urgent" %}
@@ -134,8 +86,8 @@
                         {% for rdv in today_appointments %}
                         <tr>
                             <td>{{ rdv.patients }}</td>
-                            <td>{{ rdv.date|date:"d-m-Y"  }}</td>
-                            <td>{{ rdv.date|time:"H:i" }}</td>
+                            <td>{{ rdv.date  }}</td>
+                            <td>{{ rdv.heure }}</td>
                             <td>{{ rdv.motif}}</td>
                             <td>
                                 {% if rdv.priorite == "Urgent" %}
@@ -170,8 +122,8 @@
                         {% for rdv in past_appointments %}
                         <tr>
                             <td>{{ rdv.patients }}</td>
-                            <td>{{ rdv.date|date:"d-m-Y"  }}</td>
-                            <td>{{ rdv.date|time:"H:i" }}</td>
+                            <td>{{ rdv.date }}</td>
+                            <td>{{ rdv.date.heure }}</td>
                             <td>{{ rdv.motif}}</td>
                             <td>
                                 {% if rdv.priorite == "Urgent" %}

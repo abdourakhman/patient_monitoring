@@ -1,0 +1,44 @@
+{% load widget_tweaks %}
+{% include "layout/navbar.html" %}
+<div class="modal-header mt-5">
+    <h6 class="modal-title" id="exampleModalLabel">Planifier un rendez-vous</h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body col-md-6 offset-3">
+    <form method="post" id="formRv">
+        {% csrf_token %}
+    <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Patient:</label>
+        {% render_field rvForm.patients class="form-control" id="recipient-name"  %}
+    </div>
+    <div class="form-group">
+        {% render_field rvForm.docteur class="form-control" id="recipient-name" disabled="disbled" %}
+    </div>
+    <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Motif:</label>
+        {% render_field rvForm.motif class="form-control" id="recipient-name"  %}
+    </div>
+    <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Priorite:</label>
+        {% render_field rvForm.priorite class="form-control" id="recipient-name"  %}
+    </div>
+    <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Date:</label>
+            {% render_field rvForm.date class="form-control" id="recipient-name" type="date" %}
+    </div> 
+    <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Heure:</label>
+        {% render_field rvForm.heure class="form-control" id="recipient-name" type="time" %}
+    </div> 
+    <div class="modal-footer">
+        <button type="reset" class="btn btn-secondary" >Annuler</button>
+        <button type="submit" class="btn text-white" style="background-color:#337AB0;">Planifer</button>
+    </div>
+    </form>
+</div>
+
+<div>
+</div>
+{% include 'layout/footer.html' %}

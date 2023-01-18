@@ -173,14 +173,21 @@ def afterlogin_view(request):
 def add_rv_view(request):
     rvForm = forms.Rendez_vousForm(request.POST)
     docteur = models.Docteur.objects.filter(user_id=request.user.id).get()
-    rvForm=forms.Rendez_vousForm(initial={'docteur': docteur})
     if rvForm.is_valid():
-
+        print(request.POST)
         rvForm.cleaned_data['docteur']=models.Docteur.objects.filter(user_id=request.user.id).get()
         rv = rvForm.save()
-        return HttpResponseRedirect('agenda')
+        return redirect('doctor-agenda')
     return render(request,'docteur/addRV.html',context={'rvForm':rvForm})
 
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)
+def doctor_delete_rv_view(request,idRV):
+    if request.method=='GET':
+        rv = models.RendezVous.objects.filter(id=idRV)
+        rv.delete()
+        return redirect('doctor-agenda')
+    return render(request,'docteur/agenda.html')
 
 
 

@@ -45,9 +45,10 @@ urlpatterns = [
 
 #---------FOR DOCTOR RELATED URLS-------------------------------------
 urlpatterns +=[
-    path('doctor/dashboard', views.doctor_dashboard_view,name='doctor-ashboard'),
+    path('doctor/dashboard', views.doctor_dashboard_view,name='doctor-dashboard'),
     path('doctor/agenda', views.doctor_agenda_view,name='doctor-agenda'),
     path('doctor/add_rv', views.add_rv_view,name='doctor-add-rv'),
+    path('doctor/delete_rv/<int:idRV>', views.doctor_delete_rv_view,name='doctor-delete-rv'),
     path('doctor/dossier_patients', views.doctor_dossier_patients_view,name='doctor-dossier'),
     path('doctor/prescription', views.doctor_prescription_view,name='doctor-prescription'),
     path('doctor/patients', views.doctor_patient_view,name='doctor-patient'),

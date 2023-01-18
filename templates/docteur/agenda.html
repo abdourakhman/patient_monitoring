@@ -33,9 +33,9 @@
     <div class="modal-dialog">
     </div>
     <a class="btn text-white" href="add_rv" style="margin-top:2%; background-color: #337AB7;">Nouveau Rendez-Vous</a>
-        <div class="card mb-3 mt-3 overflow-auto shadow">
+    <div class="card mb-3 mt-3 overflow-auto shadow">
             <div class="card-header"><span class="badge btn-success">PROCHAIN RENDEZ-VOUS ({{ next_rdv }}) </span></div>
-                <div class="card-body overflow-auto">
+                <div class="card-body overflow-auto" style="max-height: 350px; overflow-y: scroll;">
                     <table class="table">
                         <thead>
                             <tr>
@@ -44,6 +44,8 @@
                                 <th style="color: #337AB7;">Heure</th>
                                 <th style="color: #337AB7;">Motif</th>
                                 <th style="color: #337AB7;">Priorité</th>
+                                <th style="color: #337AB7; text-align: right;">Annuler?</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -62,6 +64,31 @@
                                     <span class="badge badge-success">Faible</span>
                                 {% endif %}
                             </td>
+                            <td style="text-align: right;">                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-times" aria-hidden="true"></i>                                
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                        Etes-vous sûr de vouloir continuer ?
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        <a class="btn btn-danger" href="{% url 'doctor-delete-rv' idRV=rdv.id %}">Annuler le Rendez-vous</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     {% endfor %}
                         </tbody>
@@ -71,7 +98,7 @@
 
         <div class="card mb-3 my-5 overflow-auto shadow">
             <div class="card-header"><span class="badge btn-danger">RENDEZ-VOUS DU JOUR ({{ rdv_today }}) </span></div>
-                <div class="card-body overflow-auto">
+                <div class="card-body overflow-auto" style="max-height: 350px; overflow-y: scroll;">
                     <table class="table">
                         <thead>
                             <tr>
@@ -80,6 +107,7 @@
                                 <th style="color: #337AB7;">Heure</th>
                                 <th style="color: #337AB7;">Motif</th>
                                 <th style="color: #337AB7;">Priorité</th>
+                                <th style="color: #337AB7; text-align: right;">Annuler?</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,6 +126,31 @@
                                     <span class="badge badge-success">Faible</span>
                                 {% endif %}
                             </td>
+                            <td style="text-align: right;">
+                                <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-times" aria-hidden="true"></i>                                
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Etes-vous sûr de vouloir continuer ?
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        <a class="btn btn-danger" href="">Annuler le Rendez-vous</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     {% endfor %}
                         </tbody>
@@ -107,7 +160,7 @@
 
         <div class="card mb-3 my-5 overflow-auto shadow">
             <div class="card-header"><span class="badge btn-secondary"> RENDEZ-VOUS PASSES ({{ past_rdv }}) </span></div>
-                <div class="card-body overflow-auto">
+                <div class="card-body overflow-auto" style="height: 250px; overflow-y: scroll;">
                     <table class="table">
                         <thead>
                             <tr>

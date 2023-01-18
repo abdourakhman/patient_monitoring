@@ -31,27 +31,27 @@
         <div class="mt-5">
             <a class="btn btn-success btn-lg fas fa-prescription-bottle-alt" href='/doctor/add_prescription'> Nouvelle ordonnance</a>
           </div>
-        <div class="card mb-3 my-5 overflow-auto shadow">
+        <div class="card mb-3 my-2 overflow-auto shadow">
             <div class="card-header" style:color="red"><span class="badge btn-info">VOS ORDONNANCES ({{ nb_ordonnance }}) </span></div>
-                <div class="card-body overflow-auto">
+                <div class="card-body overflow-auto" style="height: 470px; overflow-y: scroll;">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th style="color: #337AB7;">Patient</th>
-                                <th style="color: #337AB7;">Dossier medical</th>
                                 <th style="color: #337AB7;">Symptome</th>
+                                <th style="color: #337AB7;">Dossier medical</th>
+                                <th style="color: #337AB7; text-align:center;">Traitement</th>
                                 <th style="color: #337AB7;">Date Consultation</th>
-                                <th style="color: #337AB7;">Traitement</th>
                             </tr>
                         </thead>
                         <tbody>
                         {% for ordonnance in ordonnances %}
                         <tr>
                             <td>{{ ordonnance.dossier_medical.patient }}</td>
-                            <td>{{ ordonnance.dossier_medical.numero }}</td>
                             <td>{{ ordonnance.dossier_medical.patient.symptoms }}</td>
+                            <td style="text-align:center;">{{ ordonnance.dossier_medical.numero }}</td>
+                            <td style="text-align:center;">{{ ordonnance.contenu |truncatewords:5 }}</td>
                             <td>{{ ordonnance.date|date:"d-m-Y"  }}</td>
-                            <td>{{ ordonnance.contenu |truncatewords:5 }}</td>
                         </tr>
                     {% endfor %}
                         </tbody>

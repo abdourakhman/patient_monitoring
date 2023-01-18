@@ -31,36 +31,38 @@
       <div class="card mb-3 my-5 overflow-auto shadow">
         <div class="card-header"><span class="badge badge-info">LISTE DE VOS PATIENTS({{ nb_patient }}) </span></div>
         <div class="card-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Profile</th>
-                <th>Prenom</th>
-                <th>Nom</th>
-                <th>Date Naissance</th>
-                <th>Telephone</th>
-                <th>Date Admission</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for patient in patients %}
-              <tr>
-                <td> <img src<img src= {% static patient.profile.url %} alt='profile patient' class="rounded-circle" height="80px" width="80px" > 
-                  <td>{{ patient.prenom}}</td>
-                  <td>{{ patient.nom }}</td>
-                  <td>{{ patient.naissance }}</td>
-                  <td>{{ patient.telephone }}</td>
-                  <td>{{ patient.admission }}</td>
-              </tr>
-          {% endfor %}
-            </tbody>
-          </table>
+          <div style="height: 400px; overflow-y: scroll;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Profile</th>
+                    <th>Prenom</th>
+                    <th>Nom</th>
+                    <th>Date Naissance</th>
+                    <th>Telephone</th>
+                    <th>Date Admission</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for patient in patients %}
+                  <tr>
+                    <td> <img src<img src= {% static patient.profile.url %} alt='profile patient' class="rounded-circle" height="80px" width="80px" > 
+                      <td>{{ patient.prenom}}</td>
+                      <td>{{ patient.nom }}</td>
+                      <td>{{ patient.naissance }}</td>
+                      <td>{{ patient.telephone }}</td>
+                      <td>{{ patient.admission }}</td>
+                  </tr>
+              {% endfor %}
+                </tbody>
+              </table>
+            </div>
         </div>
       </div>
       
       <div class="card mb-3 overflow-auto shadow">
         <div class="card-header"><span class="badge badge-success"> DONNEES MEDICALES DE BASE </span></div>
-        <div class="card-body">
+        <div class="card-body" style="height: 350px; overflow-y: scroll;">
           <table class="table">
             <thead>
               <tr>

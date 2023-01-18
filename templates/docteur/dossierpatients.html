@@ -38,6 +38,7 @@
                                 <th style="color: #337AB7;">N° Dossier</th>
                                 <th style="color: #337AB7;">Création dossier</th>
                                 <th style="color: #337AB7;">Dernière modification dossier</th>
+                                <th style="color: #337AB7;">Details patient</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,7 +47,8 @@
                             <td>{{ dossier.patient }}</td>
                             <td>{{ dossier.numero }}</td>
                             <td>{{ dossier.creation }}</td>
-                            <td>{{ dossier.miseAjour}}</td>
+                            <td style="text-align:center;">{{ dossier.miseAjour}}</td>
+                            <td style="text-align:center;"><a href="{% url 'doctor-details-patient' num=dossier.numero %}"><i class="fa fa-address-card fa-2x" aria-hidden="true"></i></a></td>
                         </tr>
                     {% endfor %}
                         </tbody>

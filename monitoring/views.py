@@ -766,7 +766,17 @@ def doctor_dossier_patients_view(request):
     dossier_count = models.DossierMedical.objects.filter(service=docteur.service).all().count()
     data ={'docteur':docteur, 'dossiers':dossiers,'nb_dossier':dossier_count}
     return render(request,'docteur/dossierpatients.html',context=data)
-    
+
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)   
+def doctor_details_patient_view(request,num):
+    dossier = models.DossierMedical.objects.filter(numero=num).get()
+    patient = models.Patient.objects.filter(id=dossier.patient.id).get()
+    ordonnances = models.Ordonnance.objects.filter(dossier_medical=dossier.id)
+    rendezVous = models.RendezVous.objects.filter(patients=patient)
+    mydata={'dossier':dossier,'ordonnances':ordonnances,'patient':patient,'rendezVous':rendezVous }
+    return render(request,'docteur/detailpatient.html',context=mydata)
+
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_prescription_view(request):
